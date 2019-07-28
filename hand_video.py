@@ -34,8 +34,8 @@ try:
 
         #body = str(datum.poseKeypoints)
         #face = str(datum.faceKeypoints)
-        hand_L = str(datum.handKeypoints[0])
-        hand_R = str(datum.handKeypoints[1])
+        hand_L = datum.handKeypoints[0]
+        hand_R = datum.handKeypoints[1]
 
         cv2.imshow("Pose and Hand", datum.cvOutputData)        
         if cv2.waitKey(1) & 0xFF == ord('q'):
