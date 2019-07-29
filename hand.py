@@ -3,8 +3,7 @@ import sys
 import cv2
 import math
 
-def hand_detection():
-    img_path = './media/COCO_val2014_000000000474.jpg'
+def hand_detection(img):
     
     dir_path = os.path.dirname(os.path.realpath(__file__))
     sys.path.append(dir_path + '/python/openpose/Release');
@@ -16,14 +15,14 @@ def hand_detection():
     #params["face"] = True
     params["hand"] = True
 
-
     try:
         opWrapper = op.WrapperPython()
         opWrapper.configure(params)
         opWrapper.start()
 
         datum = op.Datum()
-        imageToProcess = cv2.imread(img_path)
+        #imageToProcess = cv2.imread(img_path)
+        imageToProcess = img
         datum.cvInputData = imageToProcess
 
         opWrapper.emplaceAndPop([datum])
@@ -35,17 +34,17 @@ def hand_detection():
 
         leftX = []
         leftY = []
-        rightX = []
-        rightY = []
         for l in left[0]:
             leftX.append(l[0])
             leftY.append(l[1])
+        rightX = []
+        rightY = []
         for r in right[0]:
             rightX.append(r[0])
             rightY.append(r[1])
 
-        cv2.imshow("Pose and Hand", datum.cvOutputData)
-        cv2.waitKey(0)
+        #cv2.imshow("Pose and Hand", datum.cvOutputData)
+        #cv2.waitKey(0)
 
     except Exception as e:
         sys.exit(-1)

@@ -1,4 +1,3 @@
-import hand
 from melodyData import data_return
 from play_melody import *
 from music_check import *
@@ -6,6 +5,9 @@ from music_check import *
 from model import Net
 from detect import hand_detect
 import torch
+
+import hand
+import cv2
 
 if __name__ == "__main__":
     midiout = Setting()       #음악 시작하기 위한 세팅
@@ -17,7 +19,7 @@ if __name__ == "__main__":
         leftX, leftY, rightX, rightY = hand_detection()
         left_centerX, left_centerY = hand_center(leftX, leftY)
         right_centerX, right_centerY = hand_center(leftX, leftY)
-        distanceX, distanceY = hand_distance(leftX, leftY, rightX, rightY)
+        distanceX, distanceY = hand_distance(left_centerX, left_centerY, right_centerX, right_centerY)
 
         rand=torch.randint(low=0,high=368,size=(1,42)).float()  # 42개의 손가락 좌표받아오기
         hand_state=hand_detect(model,rand)  # 0,1로 손가락 상태 받아오기
