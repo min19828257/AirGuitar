@@ -18,16 +18,13 @@ try:
     opWrapper.configure(params)
     opWrapper.start()
 
-    datum = op.Datum()
-
     cap = cv2.VideoCapture(0)
-
     while True:
         ret, imageToProcess = cap.read()
         imageToProcess = cv2.resize(imageToProcess, dsize=(0, 0), fx=0.3, fy=0.3, interpolation=cv2.INTER_LINEAR)
 
+        datum = op.Datum()
         datum.cvInputData = imageToProcess
-
         opWrapper.emplaceAndPop([datum])
 
         #points = datum.poseKeypoints

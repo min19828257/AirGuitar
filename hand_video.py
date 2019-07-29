@@ -20,24 +20,24 @@ try:
     opWrapper.configure(params)
     opWrapper.start()
 
-    datum = op.Datum()
-
     cap = cv2.VideoCapture(video_path)
-
     while True:
         ret, imageToProcess = cap.read()
-        imageToProcess = cv2.resize(imageToProcess, dsize=(0, 0), fx=0.3, fy=0.3, interpolation=cv2.INTER_LINEAR)
-
+        imageToProcess = cv2.resize(imageToProcess, dsize=(0, 0), fx=1.0, fy=1.0, interpolation=cv2.INTER_LINEAR)
+        
+        datum = op.Datum()
         datum.cvInputData = imageToProcess
-
-        opWrapper.emplaceAndPop([datum])
+        opWrapper.emplaceAndPop([datum])  
 
         #body = str(datum.poseKeypoints)
         #face = str(datum.faceKeypoints)
         hand_L = datum.handKeypoints[0]
         hand_R = datum.handKeypoints[1]
 
-        cv2.imshow("Pose and Hand", datum.cvOutputData)        
+        os.system('cls')
+        print(hand_L)
+
+        cv2.imshow("Pose and Hand", datum.cvOutputData) 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
