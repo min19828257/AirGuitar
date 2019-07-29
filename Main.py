@@ -14,7 +14,10 @@ if __name__ == "__main__":
     model.load_state_dict(torch.load('model/Net.pth'))  # 학습된 모델 로드
     
     while(1):
-        leftX, leftY, rightX, rightY = pose_detection()
+        leftX, leftY, rightX, rightY = hand_detection()
+        left_centerX, left_centerY = hand_center(leftX, leftY)
+        right_centerX, right_centerY = hand_center(leftX, leftY)
+        distanceX, distanceY = hand_distance(leftX, leftY, rightX, rightY)
 
         rand=torch.randint(low=0,high=368,size=(1,42)).float()  # 42개의 손가락 좌표받아오기
         hand_state=hand_detect(model,rand)  # 0,1로 손가락 상태 받아오기

@@ -1,8 +1,9 @@
 import os
 import sys
 import cv2
+import math
 
-def pose_detection():
+def hand_detection():
     img_path = './media/COCO_val2014_000000000474.jpg'
     
     dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -50,3 +51,26 @@ def pose_detection():
         sys.exit(-1)
 
     return leftX, leftY, rightX, rightY
+
+
+def hand_center(X, Y):
+    cnt = 0
+    x = 0
+    y = 0
+
+    for i in range(len(X)):
+        if X[i] == 0.: continue
+        cnt += 1
+        x += X[i]
+        y += Y[i]
+
+    x /= cnt
+    y /= cnt
+
+    return x, y
+
+def hand_distance(leftX, leftY, rightX, rightY):
+    x = abs(leftX - rightX)
+    y = abs(leftY - rightX)
+    return x, y
+
